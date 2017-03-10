@@ -23,22 +23,28 @@
  */
 
 namespace enrol_cart;
-use core\plugininfo\base, core_plugin_manager;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Find courses with a paypal enrolment option
+ * Utility classes
  */
-class list_plugins {
+class plugin_helpers {
 
     /**
      *
-     * @return array of plugins of type enrol
+     * @return true if paypal is installed and configured
+     *
      */
-    public static function get_plugins_list() {
-        global $DB;
-        $plugins = core_plugin_manager::instance()->get_plugins_of_type('enrol');
-        return $plugins;
+    public static function is_installed_paypal() {
+        
+        $client = \core\update\api::client(); 
+        $client->find_plugin('enrol_paypal');
+        if ($client) {
+        	// Check if configured with paypal account
+        	print_r($client);
+            return true;
+        }
+        return false;
    }
 }

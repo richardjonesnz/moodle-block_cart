@@ -27,15 +27,18 @@ if ($ADMIN->fulltree) {
 
      require_once($CFG->dirroot.'/enrol/cart/lib.php');
     //--- settings ------------------------------------------------------------------------------------------
+    $mods = \enrol_cart\plugin_helpers::is_installed_paypal();
+    $installed = $mods ? 'yes' : 'no';
     $settings->add(new admin_setting_heading('enrol_cart_settings', '', get_string('description', 'enrol_cart')));
+    $settings->add(new admin_setting_heading('enrol_cart_status', '', $installed));
 
-    $mods = \enrol_cart\list_plugins::get_plugins_list();
+
     $viewmods = array();
-    foreach ($mods as $modname) {
-        $viewmods[$modname] = get_string('pluginname', $modname->name);
+    /*foreach ($mods as $modname=>pluginname) {
+        $viewmods[$modname] = $modname[0];
     }
     $settings->add(new admin_setting_configmulticheckbox('enrol_cart/viewplugins',
         new lang_string('viewplugins', 'enrol_cart'),
-        new lang_string('viewplugins_desc', 'enrol_cart'), array(), $viewmods));
+        new lang_string('viewplugins_desc', 'enrol_cart'), array(), $viewmods)); */
 }
         
